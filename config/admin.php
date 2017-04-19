@@ -12,8 +12,9 @@ $_['db_username'] = DB_USERNAME;
 $_['db_password'] = DB_PASSWORD;
 $_['db_database'] = DB_DATABASE;
 $_['db_port'] = DB_PORT;
-$_['charset'] = DB_CHARSET;
-$_['collation'] = DB_COLLATION;
+$_['db_charset'] = DB_CHARSET;
+$_['db_collation'] = DB_COLLATION;
+$_['db_adapter'] = DB_ADAPTER;
 
 // Session
 $_['session_autostart'] = true;

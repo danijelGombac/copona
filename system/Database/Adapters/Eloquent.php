@@ -36,7 +36,9 @@ class Eloquent extends AbstractDatabaseAdapters
      */
     public function __construct(Array $configs)
     {
-        $this->name = isset($configs['db_connect_name']) ? $configs['db_connect_name'] : 'default';
+        if (isset($configs['db_connect_name'])) {
+            $this->name = $configs['db_connect_name'];
+        }
 
         $capsule = new Capsule;
         $capsule->addConnection([
@@ -66,19 +68,13 @@ class Eloquent extends AbstractDatabaseAdapters
      */
     public function query($sql)
     {
-        if ($this->checkIsSelect($sql)) {
-            $return = $this->connection->getPdo()->query($sql);
-            $data = $return->fetchAll();
-            $result = new \stdClass();
-            $result->num_rows = $return->rowCount();
-            $result->row = isset($data[0]) ? $data[0] : array();
-            $result->rows = $data;
-            $this->countAffected = $return->rowCount();
-        } else {
-            $result = $this->execute($sql);
-            $this->countAffected = $result;
-            $result = (bool)$result;
-        }
+        $return = $this->connection->getPdo()->query($sql);
+        $data = $return->fetchAll();
+        $result = new \stdClass();
+        $result->num_rows = $return->rowCount();
+        $result->row = isset($data[0]) ? $data[0] : array();
+        $result->rows = $data;
+        $this->countAffected = $return->rowCount();
 
         return $result;
     }
@@ -128,14 +124,14 @@ class Eloquent extends AbstractDatabaseAdapters
         return $this->capsule->getConnection($name);
     }
 
-    /**
-     * @param $sql
-     * @return bool true to select query
-     */
-    private function checkIsSelect($sql)
-    {
-        return (substr(strtoupper(trim($sql)), 0, 6) == 'SELECT');
-    }
+//    /**
+//     * @param $sql
+//     * @return bool true to select query
+//     */
+//    private function checkIsSelect($sql)
+//    {
+//        return (substr(strtoupper(trim($sql)), 0, 6) == 'SELECT');
+//    }
 
     /**
      * @return bool

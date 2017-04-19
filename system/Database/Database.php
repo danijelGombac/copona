@@ -2,8 +2,6 @@
 
 namespace Copona\System\Database;
 
-use Copona\System\Database\Adapters\Eloquent;
-
 class Database
 {
     /**
@@ -11,9 +9,13 @@ class Database
      */
     private $adapter;
 
-    public function __construct(Array $configs)
+    public function __construct($adapter, Array $configs)
     {
-        $this->adapter = new Eloquent($configs);
+        if (get_parent_class($adapter) == AbstractDatabaseAdapters::class) {
+            $this->adapter = new $adapter($configs);
+        } else {
+            throw new DatabaseException($adapter . ' must extends of ' . AbstractDatabaseAdapters::class);
+        }
     }
 
     public function query($sql, $params = array())
