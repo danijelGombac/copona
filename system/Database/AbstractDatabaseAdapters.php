@@ -1,0 +1,19 @@
+<?php
+
+namespace Copona\System\Database;
+
+
+abstract class AbstractDatabaseAdapters
+{
+    abstract public function __construct(Array $configs);
+
+    abstract public function query($sql);
+
+    abstract public function escape($value);
+
+    abstract public function countAffected();
+
+    abstract public function getLastId();
+
+    abstract public function connected();
+}

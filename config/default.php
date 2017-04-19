@@ -18,6 +18,10 @@ $_['db_username'] = 'root';
 $_['db_password'] = '';
 $_['db_database'] = '';
 $_['db_port'] = 3306;
+$_['db_connect_name'] = 'default';
+$_['charset'] = 'utf8';
+$_['collation'] = 'utf8_unicode_ci';
+$_['db_prefix'] = 'cp_';
 
 // Mail
 $_['mail_protocol'] = 'mail'; // mail or smtp

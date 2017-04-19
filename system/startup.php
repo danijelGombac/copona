@@ -9,7 +9,12 @@ error_reporting(E_ALL);
 //Load config @TODO temporary
 require_once DIR_PUBLIC . '/config/general.php';
 require_once DIR_PUBLIC . '/config/cache.php';
-require_once DIR_PUBLIC . '/config/database.php';
+
+if (file_exists(DIR_PUBLIC . '/config/database.php')) {
+    require_once DIR_PUBLIC . '/config/database.php';
+} else {
+    die('Please, copy config/database.php.example to config/database.php and define configuration');
+}
 
 //Check is admin uri
 define('IS_ADMIN', basename(realpath('')) == 'admin' ? true : false);
@@ -125,8 +130,8 @@ function modification($filename)
 }
 
 // Autoloader
-if (is_file(DIR_SYSTEM . '../vendor/autoload.php')) {
-    require_once(DIR_SYSTEM . '../vendor/autoload.php');
+if (is_file(DIR_PUBLIC . '/vendor/autoload.php')) {
+    require_once(DIR_PUBLIC . '/vendor/autoload.php');
 } else {
     die('Please, execute composer install');
 }

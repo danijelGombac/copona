@@ -5,9 +5,9 @@ namespace Copona\System\Database\Adapters;
 use Illuminate\Database\Capsule\Manager as Capsule;
 use Illuminate\Events\Dispatcher;
 use Illuminate\Container\Container;
-use Copona\System\Database\DatabaseInterface;
+use Copona\System\Database\AbstractDatabaseAdapters;
 
-class Eloquent implements DatabaseInterface
+class Eloquent extends AbstractDatabaseAdapters
 {
     /**
      * @var Capsule
@@ -36,19 +36,19 @@ class Eloquent implements DatabaseInterface
      */
     public function __construct(Array $configs)
     {
-        $this->name = isset($configs['name']) ? $configs['name'] : 'default';
+        $this->name = isset($configs['db_connect_name']) ? $configs['db_connect_name'] : 'default';
 
         $capsule = new Capsule;
         $capsule->addConnection([
-            'driver'    => isset($configs['driver']) ? $configs['driver'] : 'mysql',
-            'host'      => $configs['host'],
-            'database'  => $configs['database'],
-            'username'  => $configs['username'],
-            'password'  => $configs['password'],
-            'charset'   => isset($configs['charset']) ? $configs['charset'] : 'utf8',
-            'collation' => isset($configs['collation']) ? $configs['collation'] : 'utf8_unicode_ci',
-            'prefix'    => isset($configs['prefix']) ? $configs['prefix'] : NULL,
-            'port'      => isset($configs['port']) ? $configs['port'] : '3306'
+            'driver'    => isset($configs['db_driver']) ? $configs['db_driver'] : 'mysql',
+            'host'      => $configs['db_hostname'],
+            'database'  => $configs['db_database'],
+            'username'  => $configs['db_username'],
+            'password'  => $configs['db_password'],
+            'charset'   => isset($configs['db_charset']) ? $configs['db_charset'] : 'utf8',
+            'collation' => isset($configs['db_collation']) ? $configs['db_collation'] : 'utf8_unicode_ci',
+            'prefix'    => isset($configs['db_prefix']) ? $configs['db_prefix'] : NULL,
+            'port'      => isset($configs['db_port']) ? $configs['db_port'] : '3306'
         ], $this->name);
 
         $capsule->setEventDispatcher(new Dispatcher(new Container));

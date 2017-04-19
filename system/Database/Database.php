@@ -2,20 +2,18 @@
 
 namespace Copona\System\Database;
 
+use Copona\System\Database\Adapters\Eloquent;
+
 class Database
 {
     /**
-     * @var DatabaseInterface
+     * @var AbstractDatabaseAdapters
      */
     private $adapter;
 
-    public function __construct($adapter, Array $configs)
+    public function __construct(Array $configs)
     {
-        if (class_exists($adapter)) {
-            $this->adapter = new $adapter($configs);
-        } else {
-            throw new \Exception('Error: Could not load database adapter ' . $adapter . '!');
-        }
+        $this->adapter = new Eloquent($configs);
     }
 
     public function query($sql, $params = array())

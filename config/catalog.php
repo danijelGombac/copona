@@ -9,11 +9,15 @@ $_['url_autostart'] = false;
 // Database
 $_['db_autostart'] = true;
 $_['db_type'] = DB_DRIVER; // mpdo, mssql, mysql, mysqli or postgre
+$_['db_connect_name'] = 'catalog';
 $_['db_hostname'] = DB_HOSTNAME;
 $_['db_username'] = DB_USERNAME;
 $_['db_password'] = DB_PASSWORD;
 $_['db_database'] = DB_DATABASE;
+$_['db_prefix'] = DB_PREFIX;
 $_['db_port'] = DB_PORT;
+$_['charset'] = DB_CHARSET;
+$_['collation'] = DB_COLLATION;
 
 // Session
 $_['session_autostart'] = false;
