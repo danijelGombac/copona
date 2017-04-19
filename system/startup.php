@@ -2,11 +2,55 @@
 // Error Reporting
 error_reporting(E_ALL);
 
-// DEBUG functions
-require_once(DIR_SYSTEM . 'helper/debug.php');
+//Load config @TODO temporary
+require_once DIR_PUBLIC . '/config/general.php';
+require_once DIR_PUBLIC . '/config/cache.php';
+require_once DIR_PUBLIC . '/config/database.php';
+
+define('IS_ADMIN', basename(realpath('')) == 'admin' ? true : false);
+
+$server_port = '';
+if (isset($_SERVER['SERVER_PORT']) && ($_SERVER['SERVER_PORT'] != 80) && $_SERVER['SERVER_PORT'] != 443) {
+    $server_port = ':' . $_SERVER['SERVER_PORT'];
+}
+
+//define base url constant
+define('DOMAINNAME', isset($_SERVER['SERVER_NAME']) ? $_SERVER['SERVER_NAME'] . $server_port : null);
+
+$parse_url = parse_url($_SERVER['SCRIPT_NAME']);
+define('BASEURI', str_replace(['index.php', '//'], '', $parse_url['path']));
+
+define('BASEURL_ADMIN', DOMAINNAME . BASEURI);
+
+define('BASEURL_UPLOAD', (str_replace(['index.php', 'admin', 'core', '//', 'app'], '', BASEURL_ADMIN)));
+
+// HTTP
+define('HTTP_SERVER', 'http://' . BASEURL_UPLOAD);
+
+// HTTPS
+define('HTTPS_SERVER', 'https://' . BASEURL_UPLOAD);
+
+// DIR
+define('DIR_APPLICATION', DIR_PUBLIC . (IS_ADMIN ? '/admin/' : '/catalog/'));
+define('DIR_LANGUAGE', DIR_PUBLIC . (IS_ADMIN ? '/admin/language/' : '/catalog/language/'));
+define('DIR_TEMPLATE', DIR_PUBLIC . (IS_ADMIN ? '/admin/view/template/' : '/catalog/view/theme/'));
+define('DIR_SYSTEM', DIR_PUBLIC . '/system/');
+define('DIR_IMAGE', DIR_PUBLIC . '/' . PATH_IMAGE);
+define('DIR_CACHE', DIR_PUBLIC . '/' . PATH_CACHE);
+define('DIR_DOWNLOAD', DIR_PUBLIC . '/' . PATH_DOWNLOAD);
+define('DIR_LOGS', DIR_PUBLIC . '/' . PATH_LOGS);
+define('DIR_MODIFICATION', DIR_PUBLIC . '/' . PATH_MODIFICATION);
+define('DIR_UPLOAD', DIR_PUBLIC . '/' . PATH_UPLOAD);
+define('DIR_CONFIG', DIR_PUBLIC . '/config/');
+
+// Install @TODO ver isso depois
+//if (!defined('DIR_APPLICATION')) {
+//    header('Location: install/index.php');
+//    exit;
+//}
 
 // Check Version
-if (version_compare(phpversion(), '5.6.0', '<') == true) {
+if (version_compare(phpversion(), '5.6.4', '<=') == true) {
     exit('PHP5.6+ Required');
 }
 
@@ -52,7 +96,8 @@ if (defined('HTTP_HOST') && defined('HTTPS_HOST') && $_SERVER['HTTP_HOST'] != pa
 }
 
 // Modification Override
-function modification($filename) {
+function modification($filename)
+{
     if (defined('DIR_CATALOG')) {
         $file = DIR_MODIFICATION . 'admin/' . substr($filename, strlen(DIR_APPLICATION));
     } elseif (defined('DIR_OPENCART')) {
@@ -75,9 +120,12 @@ function modification($filename) {
 // Autoloader
 if (is_file(DIR_SYSTEM . '../vendor/autoload.php')) {
     require_once(DIR_SYSTEM . '../vendor/autoload.php');
+} else {
+    die('Please, execute composer install');
 }
 
-function library($class) {
+function library($class)
+{
     $file = DIR_SYSTEM . 'library/' . str_replace('\\', '/', strtolower($class)) . '.php';
 
     if (is_file($file)) {
@@ -107,7 +155,9 @@ require_once(modification(DIR_SYSTEM . 'engine/proxy.php'));
 require_once(DIR_SYSTEM . 'helper/general.php');
 require_once(DIR_SYSTEM . 'helper/utf8.php');
 require_once(DIR_SYSTEM . 'helper/json.php');
+require_once(DIR_SYSTEM . 'helper/debug.php');
 
-function start($application_config) {
+function start($application_config)
+{
     require_once(DIR_SYSTEM . 'framework.php');
 }
