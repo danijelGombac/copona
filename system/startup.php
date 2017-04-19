@@ -1,4 +1,8 @@
 <?php
+// Version
+define('VERSION', '2.3.0.3_rc');
+define('COPONA_VERSION', '');
+
 // Error Reporting
 error_reporting(E_ALL);
 
@@ -7,6 +11,7 @@ require_once DIR_PUBLIC . '/config/general.php';
 require_once DIR_PUBLIC . '/config/cache.php';
 require_once DIR_PUBLIC . '/config/database.php';
 
+//Check is admin uri
 define('IS_ADMIN', basename(realpath('')) == 'admin' ? true : false);
 
 $server_port = '';
@@ -20,15 +25,17 @@ define('DOMAINNAME', isset($_SERVER['SERVER_NAME']) ? $_SERVER['SERVER_NAME'] . 
 $parse_url = parse_url($_SERVER['SCRIPT_NAME']);
 define('BASEURI', str_replace(['index.php', '//'], '', $parse_url['path']));
 
-define('BASEURL_ADMIN', DOMAINNAME . BASEURI);
+define('BASEURL', DOMAINNAME . BASEURI);
 
-define('BASEURL_UPLOAD', (str_replace(['index.php', 'admin', 'core', '//', 'app'], '', BASEURL_ADMIN)));
+define('BASEURL_CATALOG', (str_replace(['index.php', 'admin', 'core', '//', 'app'], '', BASEURL)));
 
 // HTTP
-define('HTTP_SERVER', 'http://' . BASEURL_UPLOAD);
+define('HTTP_SERVER', 'http://' . BASEURL_CATALOG . (IS_ADMIN ? '/admin/' : ''));
+define('HTTP_CATALOG', 'http://' . BASEURL_CATALOG);
 
 // HTTPS
-define('HTTPS_SERVER', 'https://' . BASEURL_UPLOAD);
+define('HTTPS_SERVER', 'https://' . BASEURL_CATALOG . (IS_ADMIN ? '/admin/' : ''));
+define('HTTPS_CATALOG', 'https://' . BASEURL_CATALOG);
 
 // DIR
 define('DIR_APPLICATION', DIR_PUBLIC . (IS_ADMIN ? '/admin/' : '/catalog/'));
