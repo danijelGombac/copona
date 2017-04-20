@@ -2,6 +2,8 @@
 
 namespace Copona\System\Database;
 
+use Symfony\Component\Config\Definition\Exception\Exception;
+
 class Database
 {
     /**
@@ -14,7 +16,7 @@ class Database
         if (get_parent_class($adapter) == AbstractDatabaseAdapters::class) {
             $this->adapter = new $adapter($configs);
         } else {
-            throw new DatabaseException($adapter . ' must extends of ' . AbstractDatabaseAdapters::class);
+            throw new Exception($adapter . ' must extends of ' . AbstractDatabaseAdapters::class);
         }
     }
 

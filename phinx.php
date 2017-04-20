@@ -1,6 +1,8 @@
 <?php
 
-require_once __DIR__ . "/config.php";
+define('DIR_PUBLIC', __DIR__);
+
+require_once __DIR__ . "/system/startup.php";
 
 $migration_path = __DIR__ . "/migrations";
 

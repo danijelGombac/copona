@@ -2,6 +2,7 @@
 
 namespace Copona\System\Database\Adapters;
 
+use Copona\System\Database\Exception\DatabaseException;
 use Illuminate\Database\Capsule\Manager as Capsule;
 use Illuminate\Events\Dispatcher;
 use Illuminate\Container\Container;
@@ -68,15 +69,21 @@ class Eloquent extends AbstractDatabaseAdapters
      */
     public function query($sql)
     {
-        $return = $this->connection->getPdo()->query($sql);
-        $data = $return->fetchAll();
-        $result = new \stdClass();
-        $result->num_rows = $return->rowCount();
-        $result->row = isset($data[0]) ? $data[0] : array();
-        $result->rows = $data;
-        $this->countAffected = $return->rowCount();
+        try {
 
-        return $result;
+            $return = $this->connection->getPdo()->query($sql);
+            $data = $return->fetchAll();
+            $result = new \stdClass();
+            $result->num_rows = $return->rowCount();
+            $result->row = isset($data[0]) ? $data[0] : array();
+            $result->rows = $data;
+            $this->countAffected = $return->rowCount();
+
+            return $result;
+
+        } catch (\PDOException $e) {
+            throw new DatabaseException($e, $sql);
+        }
     }
 
     /**
@@ -95,8 +102,7 @@ class Eloquent extends AbstractDatabaseAdapters
     public function escape($value)
     {
         return $value;
-
-        return $this->connection->quote($value);
+//        return $this->connection->getPdo()->quote($value);
     }
 
     /**

@@ -52,7 +52,7 @@ if ($config->get('db_autostart')) {
 
     if (!$registry->get('db')->query('SHOW TABLES LIKE \'' . DB_PREFIX . 'setting\'')->rows) {
         //no table setting.
-        throw new \Copona\System\Database\DatabaseException('Check Config file for correct Database connection!');
+        throw new Exception('Check Config file for correct Database connection!');
     }
 }
 
