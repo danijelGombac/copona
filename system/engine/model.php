@@ -11,6 +11,7 @@ abstract class Model extends ModelBase
     public function __construct($registry)
     {
         $this->registry = $registry;
+        parent::__construct($registry);
     }
 
     public function __get($key)

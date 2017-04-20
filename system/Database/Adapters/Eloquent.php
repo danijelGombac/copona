@@ -4,9 +4,11 @@ namespace Copona\System\Database\Adapters;
 
 use Copona\System\Database\Exception\DatabaseException;
 use Illuminate\Database\Capsule\Manager as Capsule;
+use Illuminate\Database\ConnectionResolver;
 use Illuminate\Events\Dispatcher;
 use Illuminate\Container\Container;
 use Copona\System\Database\AbstractDatabaseAdapters;
+use Illuminate\Support\Facades\DB;
 
 class Eloquent extends AbstractDatabaseAdapters
 {
@@ -60,18 +62,20 @@ class Eloquent extends AbstractDatabaseAdapters
 
         $capsule->bootEloquent();
         $this->capsule = $capsule;
-        $this->connection = $this->capsule->schema($this->name)->getConnection();
+        $this->connection = $this->capsule->getConnection($this->name);
     }
 
     /**
-     * @param $sql
+     * @param       $sql
+     * @param array $params
      * @return bool|int|\stdClass
+     * @throws DatabaseException
      */
-    public function query($sql)
+    public function query($sql, Array $params = [])
     {
         try {
 
-            $return = $this->connection->getPdo()->query($sql);
+            $return = $this->getConnection()->getPdo()->query($sql);
             $data = $return->fetchAll();
             $result = new \stdClass();
             $result->num_rows = $return->rowCount();
@@ -92,7 +96,7 @@ class Eloquent extends AbstractDatabaseAdapters
      */
     public function execute($sql)
     {
-        return $this->connection->affectingStatement($sql);
+        return $this->getConnection()->affectingStatement($sql);
     }
 
     /**
@@ -118,26 +122,18 @@ class Eloquent extends AbstractDatabaseAdapters
      */
     public function getLastId()
     {
-        return $this->connection->getPdo()->lastInsertId();
+        return $this->getConnection()->getPdo()->lastInsertId();
     }
 
     /**
      * @param string $name
      * @return \Illuminate\Database\Connection
      */
-    public function getConnection($name = 'default')
+    public function getConnection($name = null)
     {
+        $name = ($name) ? $name : $this->name;
         return $this->capsule->getConnection($name);
     }
-
-//    /**
-//     * @param $sql
-//     * @return bool true to select query
-//     */
-//    private function checkIsSelect($sql)
-//    {
-//        return (substr(strtoupper(trim($sql)), 0, 6) == 'SELECT');
-//    }
 
     /**
      * @return bool

@@ -20,28 +20,8 @@ class Database
         }
     }
 
-    public function query($sql, $params = array())
+    public function getAdapter()
     {
-        return $this->adapter->query($sql, $params);
-    }
-
-    public function escape($value)
-    {
-        return $this->adapter->escape($value);
-    }
-
-    public function countAffected()
-    {
-        return $this->adapter->countAffected();
-    }
-
-    public function getLastId()
-    {
-        return $this->adapter->getLastId();
-    }
-
-    public function connected()
-    {
-        return $this->adapter->connected();
+        return $this->adapter;
     }
 }

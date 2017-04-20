@@ -38,17 +38,20 @@ $registry->set('response', $response);
 // Database
 if ($config->get('db_autostart')) {
 
-    $registry->set('db', new \Copona\System\Database\Database($config->get('db_adapter'), [
+    $database = new \Copona\System\Database\Database($config->get('db_adapter'), [
         'db_type'         => $config->get('db_type'),
         'db_connect_name' => $config->get('db_connect_name'),
         'db_hostname'     => $config->get('db_hostname'),
         'db_username'     => $config->get('db_username'),
         'db_password'     => $config->get('db_password'),
         'db_database'     => $config->get('db_database'),
+        'db_prefix'       => $config->get('db_prefix'),
         'db_port'         => $config->get('db_port'),
         'db_charset'      => $config->get('db_charset'),
         'db_collation'    => $config->get('db_collation'),
-    ]));
+    ]);
+
+    $registry->set('db', $database->getAdapter());
 
     if (!$registry->get('db')->query('SHOW TABLES LIKE \'' . DB_PREFIX . 'setting\'')->rows) {
         //no table setting.
