@@ -2,7 +2,7 @@
 /.htaccess
 /install/.htaccess
 /.htpasswd
-/config/database.php
+/config.php
 .env
 /admin/config.php
 /catalog/controller/xml
@@ -28,7 +28,7 @@ catalog/controller/xml/*.xml
 !/image/catalog/cart.png
 
 # System Cache Files
-/storage/cache/*
+/system/storage/cache/*
 
 # Vqmod
 /vqmod/vqcache/*
@@ -36,18 +36,18 @@ catalog/controller/xml/*.xml
 /vqmod/*.cache
 
 # Modification Files
-/storage/modification/*
+/system/storage/modification/*
 
 # Templates Files
 /image/templates/*
 /image/templates/default.jpg
 
 # Download Files
-/storage/download/*
+/system/storage/download/*
 
 # Upload Files
-/storage/*
-/storage/logs/*
+/system/storage/*
+/system/storage/logs/*
 
 # Templates
 /catalog/view/theme/*
@@ -62,7 +62,7 @@ catalog/controller/xml/*.xml
 
 
 # Not files
-!/storage/**/index.html
+!/system/storage/**/index.html
 !/image/cache/index.html
 !/image/no_image.jpg
 
@@ -107,8 +107,7 @@ GitHub.sublime-settings
 # Reference: https://intellij-support.jetbrains.com/hc/en-us/articles/206544839
 
 # User-specific stuff:
-.idea/
-#.idea/workspace.xml
+.idea/workspace.xml
 .idea/tasks.xml
 
 # Sensitive or high-churn files:
@@ -148,4 +147,3 @@ crashlytics-build.properties
 fabric.properties
 
 .DS_Store
-.idea/
