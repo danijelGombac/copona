@@ -4,11 +4,9 @@ namespace Copona\System\Database\Adapters;
 
 use Copona\System\Database\Exception\DatabaseException;
 use Illuminate\Database\Capsule\Manager as Capsule;
-use Illuminate\Database\ConnectionResolver;
 use Illuminate\Events\Dispatcher;
 use Illuminate\Container\Container;
 use Copona\System\Database\AbstractDatabaseAdapters;
-use Illuminate\Support\Facades\DB;
 
 class Eloquent extends AbstractDatabaseAdapters
 {

@@ -2,9 +2,7 @@
 // Registry
 $registry = new Registry();
 
-// Config
-$config = new Config();
-$config->load('default');
+global $config;
 $config->load($application_config);
 $registry->set('config', $config);
 

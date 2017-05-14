@@ -6,15 +6,13 @@ define('COPONA_VERSION', '');
 // Error Reporting
 error_reporting(E_ALL);
 
-//Load config @TODO temporary
-require_once DIR_PUBLIC . '/config/general.php';
-require_once DIR_PUBLIC . '/config/cache.php';
-
-if (file_exists(DIR_PUBLIC . '/config/database.php')) {
-    require_once DIR_PUBLIC . '/config/database.php';
-} else {
-    die('Please, copy config/database.php.example to config/database.php and define configuration');
-}
+// Config
+require_once DIR_PUBLIC . '/system/library/config.php';
+$config = new Config();
+$config->load('database');
+$config->load('default');
+$config->load('general');
+$config->load('cache');
 
 //Check is admin uri
 define('IS_ADMIN', basename(realpath('')) == 'admin' ? true : false);
@@ -34,32 +32,34 @@ define('BASEURL', DOMAINNAME . BASEURI);
 
 define('BASEURL_CATALOG', (str_replace(['index.php', 'admin', 'core', '//', 'app'], '', BASEURL)));
 
-// HTTP
-define('HTTP_SERVER', 'http://' . BASEURL_CATALOG . (IS_ADMIN ? '/admin/' : ''));
-define('HTTP_CATALOG', 'http://' . BASEURL_CATALOG);
+// Install
+if (is_dir(DIR_PUBLIC . '/install/') && defined('DIR_OPENCART') == false) {
+    header('Location: install/index.php');
+    exit;
+}
 
-// HTTPS
-define('HTTPS_SERVER', 'https://' . BASEURL_CATALOG . (IS_ADMIN ? '/admin/' : ''));
-define('HTTPS_CATALOG', 'https://' . BASEURL_CATALOG);
+if(defined('DIR_OPENCART') == false) {
+    // HTTP
+    define('HTTP_SERVER', 'http://' . BASEURL_CATALOG . (IS_ADMIN ? '/admin/' : ''));
+    define('HTTP_CATALOG', 'http://' . BASEURL_CATALOG);
 
-// DIR
-define('DIR_APPLICATION', DIR_PUBLIC . (IS_ADMIN ? '/admin/' : '/catalog/'));
-define('DIR_LANGUAGE', DIR_PUBLIC . (IS_ADMIN ? '/admin/language/' : '/catalog/language/'));
-define('DIR_TEMPLATE', DIR_PUBLIC . (IS_ADMIN ? '/admin/view/template/' : '/catalog/view/theme/'));
-define('DIR_SYSTEM', DIR_PUBLIC . '/system/');
-define('DIR_IMAGE', DIR_PUBLIC . '/' . PATH_IMAGE);
-define('DIR_CACHE', DIR_PUBLIC . '/' . PATH_CACHE);
-define('DIR_DOWNLOAD', DIR_PUBLIC . '/' . PATH_DOWNLOAD);
-define('DIR_LOGS', DIR_PUBLIC . '/' . PATH_LOGS);
-define('DIR_MODIFICATION', DIR_PUBLIC . '/' . PATH_MODIFICATION);
-define('DIR_UPLOAD', DIR_PUBLIC . '/' . PATH_UPLOAD);
-define('DIR_CONFIG', DIR_PUBLIC . '/config/');
+    // HTTPS
+    define('HTTPS_SERVER', 'https://' . BASEURL_CATALOG . (IS_ADMIN ? '/admin/' : ''));
+    define('HTTPS_CATALOG', 'https://' . BASEURL_CATALOG);
 
-// Install @TODO ver isso depois
-//if (!defined('DIR_APPLICATION')) {
-//    header('Location: install/index.php');
-//    exit;
-//}
+    // DIR
+    define('DIR_APPLICATION', DIR_PUBLIC . (IS_ADMIN ? '/admin/' : '/catalog/'));
+    define('DIR_LANGUAGE', DIR_PUBLIC . (IS_ADMIN ? '/admin/language/' : '/catalog/language/'));
+    define('DIR_TEMPLATE', DIR_PUBLIC . (IS_ADMIN ? '/admin/view/template/' : '/catalog/view/theme/'));
+    define('DIR_SYSTEM', DIR_PUBLIC . '/system/');
+    define('DIR_IMAGE', DIR_PUBLIC . '/' . PATH_IMAGE);
+    define('DIR_CACHE', DIR_PUBLIC . '/' . PATH_CACHE);
+    define('DIR_DOWNLOAD', DIR_PUBLIC . '/' . PATH_DOWNLOAD);
+    define('DIR_LOGS', DIR_PUBLIC . '/' . PATH_LOGS);
+    define('DIR_MODIFICATION', DIR_PUBLIC . '/' . PATH_MODIFICATION);
+    define('DIR_UPLOAD', DIR_PUBLIC . '/' . PATH_UPLOAD);
+    define('DIR_CONFIG', DIR_PUBLIC . '/config/');
+}
 
 // Check Version
 if (version_compare(phpversion(), '5.6.4', '<=') == true) {
