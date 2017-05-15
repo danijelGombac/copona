@@ -2,12 +2,7 @@
     "name": "copona/copona",
     "type": "project",
     "description": "A free shopping cart system, based on OpenCart (http://www.opencart.com)",
-    "keywords": [
-        "copona",
-        "ecommerce",
-        "framework",
-        "opensource"
-    ],
+    "keywords": ["copona", "ecommerce", "framework", "opensource"],
     "homepage": "https://github.com/copona/copona",
     "license": "GPL-3.0+",
     "require": {
@@ -29,5 +24,7 @@
             "Copona\\Catalog\\": "catalog/",
             "Copona\\System\\": "system/"
         }
+		"robmorgan/phinx": "^0.6.6",
+		"filp/whoops": "^2.1"
     }
 }

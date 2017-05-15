@@ -6,6 +6,18 @@ define('COPONA_VERSION', '');
 // Error Reporting
 error_reporting(E_ALL);
 
+// Composer Autoloader
+if (is_file(DIR_SYSTEM . '../vendor/autoload.php')) {
+    require_once(DIR_SYSTEM . '../vendor/autoload.php');
+} else {
+    die('Please, execute composer install');
+}
+
+//Errors handler
+$whoops = new \Whoops\Run;
+$whoops->pushHandler(new \Whoops\Handler\PrettyPageHandler);
+$whoops->register();
+
 // Config
 require_once DIR_PUBLIC . '/system/library/config.php';
 $config = new Config();
@@ -60,6 +72,17 @@ if(defined('DIR_OPENCART') == false) {
     define('DIR_UPLOAD', DIR_PUBLIC . '/' . PATH_UPLOAD);
     define('DIR_CONFIG', DIR_PUBLIC . '/config/');
 }
+// Composer Autoloader
+if (is_file(DIR_SYSTEM . '../vendor/autoload.php')) {
+    require_once(DIR_SYSTEM . '../vendor/autoload.php');
+} else {
+    die('Please, execute composer install');
+}
+
+//Errors handler
+$whoops = new \Whoops\Run;
+$whoops->pushHandler(new \Whoops\Handler\PrettyPageHandler);
+$whoops->register();
 
 // Check Version
 if (version_compare(phpversion(), '5.6.4', '<=') == true) {
@@ -127,13 +150,6 @@ function modification($filename)
     }
 
     return $filename;
-}
-
-// Autoloader
-if (is_file(DIR_PUBLIC . '/vendor/autoload.php')) {
-    require_once(DIR_PUBLIC . '/vendor/autoload.php');
-} else {
-    die('Please, execute composer install');
 }
 
 function library($class)
