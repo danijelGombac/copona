@@ -15,7 +15,8 @@
         "phpmailer/phpmailer": "^5.2",
         "robmorgan/phinx": "^0.6.6",
         "illuminate/database": "5.4.*",
-        "illuminate/events": "5.4.*"
+        "illuminate/events": "5.4.*",
+        "filp/whoops": "^2.1"
     },
     "autoload": {
         "psr-4": {
@@ -24,7 +25,5 @@
             "Copona\\Catalog\\": "catalog/",
             "Copona\\System\\": "system/"
         }
-		"robmorgan/phinx": "^0.6.6",
-		"filp/whoops": "^2.1"
     }
 }
