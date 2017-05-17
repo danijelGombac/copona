@@ -7,8 +7,8 @@ define('COPONA_VERSION', '');
 error_reporting(E_ALL);
 
 // Composer Autoloader
-if (is_file(DIR_SYSTEM . '../vendor/autoload.php')) {
-    require_once(DIR_SYSTEM . '../vendor/autoload.php');
+if (is_file(__DIR__ . '/../vendor/autoload.php')) {
+    require_once(__DIR__ . '/../vendor/autoload.php');
 } else {
     die('Please, execute composer install');
 }
@@ -19,6 +19,7 @@ $whoops->pushHandler(new \Whoops\Handler\PrettyPageHandler);
 $whoops->register();
 
 // Config
+define('DIR_CONFIG', DIR_PUBLIC . '/config/');
 require_once DIR_PUBLIC . '/system/library/config.php';
 $config = new Config();
 $config->load('database');
@@ -70,8 +71,8 @@ if(defined('DIR_OPENCART') == false) {
     define('DIR_LOGS', DIR_PUBLIC . '/' . PATH_LOGS);
     define('DIR_MODIFICATION', DIR_PUBLIC . '/' . PATH_MODIFICATION);
     define('DIR_UPLOAD', DIR_PUBLIC . '/' . PATH_UPLOAD);
-    define('DIR_CONFIG', DIR_PUBLIC . '/config/');
 }
+
 // Composer Autoloader
 if (is_file(DIR_SYSTEM . '../vendor/autoload.php')) {
     require_once(DIR_SYSTEM . '../vendor/autoload.php');

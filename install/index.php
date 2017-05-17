@@ -29,7 +29,6 @@ define('DIR_DOWNLOAD', DIR_APPLICATION . '/storage/download/');
 define('DIR_LOGS', DIR_APPLICATION . '/storage/logs/');
 define('DIR_MODIFICATION', DIR_APPLICATION . '/storage/modification/');
 define('DIR_UPLOAD', DIR_APPLICATION . '/storage/upload/');
-define('DIR_CONFIG', DIR_PUBLIC . '/config/');
 
 define('DIR_DATABASE', DIR_SYSTEM . 'database/');
 
