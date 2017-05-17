@@ -16,7 +16,8 @@
         "robmorgan/phinx": "^0.6.6",
         "illuminate/database": "5.4.*",
         "illuminate/events": "5.4.*",
-        "filp/whoops": "^2.1"
+        "filp/whoops": "^2.1",
+        "vlucas/phpdotenv": "^2.4"
     },
     "autoload": {
         "psr-4": {
