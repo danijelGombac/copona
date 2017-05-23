@@ -13,6 +13,10 @@ if (is_file(__DIR__ . '/../vendor/autoload.php')) {
     die('Please, execute composer install');
 }
 
+//Load Dotenv
+$dotenv = new Dotenv\Dotenv(DIR_PUBLIC);
+$dotenv->load();
+
 //Errors handler
 $whoops = new \Whoops\Run;
 $whoops->pushHandler(new \Whoops\Handler\PrettyPageHandler);
