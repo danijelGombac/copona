@@ -6,6 +6,9 @@ define('COPONA_VERSION', '');
 // Error Reporting
 error_reporting(E_ALL);
 
+// Debug helper
+require_once(DIR_SYSTEM . 'helper/debug.php');
+
 // Composer Autoloader
 if (is_file(__DIR__ . '/../vendor/autoload.php')) {
     require_once(__DIR__ . '/../vendor/autoload.php');
@@ -136,8 +139,7 @@ if (defined('HTTP_HOST') && defined('HTTPS_HOST') && $_SERVER['HTTP_HOST'] != pa
 }
 
 // Modification Override
-function modification($filename)
-{
+function modification($filename) {
     if (defined('DIR_CATALOG')) {
         $file = DIR_MODIFICATION . 'admin/' . substr($filename, strlen(DIR_APPLICATION));
     } elseif (defined('DIR_OPENCART')) {
@@ -157,8 +159,7 @@ function modification($filename)
     return $filename;
 }
 
-function library($class)
-{
+function library($class) {
     $file = DIR_SYSTEM . 'library/' . str_replace('\\', '/', strtolower($class)) . '.php';
 
     if (is_file($file)) {
@@ -188,9 +189,7 @@ require_once(modification(DIR_SYSTEM . 'engine/proxy.php'));
 require_once(DIR_SYSTEM . 'helper/general.php');
 require_once(DIR_SYSTEM . 'helper/utf8.php');
 require_once(DIR_SYSTEM . 'helper/json.php');
-require_once(DIR_SYSTEM . 'helper/debug.php');
 
-function start($application_config)
-{
+function start($application_config) {
     require_once(DIR_SYSTEM . 'framework.php');
 }
